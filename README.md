@@ -23,11 +23,11 @@ Resolver as cinco missões propostas, cada uma representando um desafio com cons
 
 ## 📊 Regras e Pontuação
 
-| Situação                          | Pontos       |
-|----------------------------------|--------------|
-| ✔️ Missão concluída corretamente     | 10 pontos    |
-| ⚠️ Missão concluída com erro de sintaxe | 3 pontos     |
-| ❌ Missão não concluída              | 0 pontos     |
+| Situação                                | Pontos        |
+|-----------------------------------------|---------------|
+| ✔️ Missões concluídas corretamente     | 100 pontos    |
+| ⚠️ Cada erro nas respostas             | -5 pontos     |
+| ✅ Missão concluída sem erros          | 2 pontos      |
 
 ### 🎁 Bônus:
 
