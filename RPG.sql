@@ -1,4 +1,6 @@
 CREATE DATABASE RPG;
+USE RPG;
+
 -- Tabela de locais
 CREATE TABLE locais (
     id INT PRIMARY KEY,
@@ -10,24 +12,30 @@ CREATE TABLE locais (
 
 -- Tabela de inimigos
 CREATE TABLE inimigos (
-    id INT PRIMARY KEY,
-    nome VARCHAR(50) NOT NULL,
-    tipo VARCHAR(20),
-    nivel INT,
-    vida INT,
-    fraqueza VARCHAR(20),
-    item_drop VARCHAR(50)
+  id INT PRIMARY KEY,
+  nome VARCHAR(100),
+  tipo VARCHAR(50),
+  nivel INT,
+  vida INT,
+  ataque INT,
+  defesa INT,
+  experiencia_concedida INT,
+  ouro_concedido INT,
+  item_drop_id INT,
+  localizacao VARCHAR(100)
 );
+
 
 -- Tabela de itens
 CREATE TABLE itens (
-    id INT PRIMARY KEY,
-    nome VARCHAR(50) NOT NULL,
-    tipo VARCHAR(20),
-    poder INT,
-    elemento VARCHAR(20),
-    local_encontrado VARCHAR(50)
+  id INT PRIMARY KEY,
+  nome VARCHAR(100),
+  tipo VARCHAR(50),
+  poder INT,
+  elemento VARCHAR(50),
+  origem VARCHAR(100)
 );
+
 
 -- Tabela de Continentes
 CREATE TABLE continentes (
@@ -57,7 +65,7 @@ CREATE TABLE cidades (
     FOREIGN KEY (reino_id) REFERENCES reinos(id)
 );
 
--- Tabela de NPCs (Personagens Não-Jogáveis)
+-- Tabela de NPCs
 CREATE TABLE npcs (
     id INT PRIMARY KEY,
     nome VARCHAR(50) NOT NULL,
@@ -68,7 +76,7 @@ CREATE TABLE npcs (
     FOREIGN KEY (cidade_id) REFERENCES cidades(id)
 );
 
--- Tabela de Classes de Heróis
+-- Tabela de Classes
 CREATE TABLE classes (
     id INT PRIMARY KEY,
     nome VARCHAR(30) NOT NULL,
@@ -86,7 +94,7 @@ CREATE TABLE racas (
     habilidade_racial VARCHAR(50)
 );
 
--- Tabela de Heróis (Jogadores)
+-- Tabela de Heróis
 CREATE TABLE herois (
     id INT PRIMARY KEY,
     nome VARCHAR(50) NOT NULL,
@@ -118,19 +126,6 @@ CREATE TABLE missoes (
     FOREIGN KEY (npc_dispensador_id) REFERENCES npcs(id)
 );
 
--- Tabela de Itens
-CREATE TABLE itens (
-    id INT PRIMARY KEY,
-    nome VARCHAR(50) NOT NULL,
-    tipo VARCHAR(30),
-    raridade VARCHAR(15),
-    nivel_requerido INT DEFAULT 1,
-    valor INT,
-    peso DECIMAL(5,2),
-    atributo_principal VARCHAR(20),
-    valor_atributo INT
-);
-
 -- Tabela de Inventário
 CREATE TABLE inventario (
     heroi_id INT,
@@ -140,22 +135,6 @@ CREATE TABLE inventario (
     PRIMARY KEY (heroi_id, item_id),
     FOREIGN KEY (heroi_id) REFERENCES herois(id),
     FOREIGN KEY (item_id) REFERENCES itens(id)
-);
-
--- Tabela de Inimigos
-CREATE TABLE inimigos (
-    id INT PRIMARY KEY,
-    nome VARCHAR(50) NOT NULL,
-    tipo VARCHAR(30),
-    nivel INT,
-    vida INT,
-    ataque INT,
-    defesa INT,
-    experiencia_concedida INT,
-    ouro_concedido INT,
-    item_drop_id INT,
-    localizacao VARCHAR(50),
-    FOREIGN KEY (item_drop_id) REFERENCES itens(id)
 );
 
 -- Tabela de Habilidades
@@ -182,6 +161,7 @@ CREATE TABLE locais_importantes (
     FOREIGN KEY (cidade_id) REFERENCES cidades(id)
 );
 
+
 -- Inserção de dados
 INSERT INTO locais VALUES
 (1, 'Floresta Proibida', 'Floresta', 'Médio', 'Mapa Antigo'),
@@ -191,11 +171,12 @@ INSERT INTO locais VALUES
 (5, 'Castelo das Sombras', 'Castelo', 'Máximo', 'Cristal da Terra');
 
 INSERT INTO inimigos VALUES
-(1, 'Lobo da Floresta', 'Animal', 3, 50, 'Fogo', 'Pele de Lobo'),
-(2, 'Guardião da Água', 'Espírito', 8, 120, 'Raio', 'Pérola Brilhante'),
-(3, 'Golem de Lava', 'Elemental', 12, 200, 'Água', 'Núcleo de Magma'),
-(4, 'Mestre dos Ventos', 'Humanoide', 15, 180, 'Terra', 'Asas de Fênix'),
-(5, 'Dragão Sombrio', 'Dragão', 25, 400, 'Luz', 'Cristal Elemental');
+(1, 'Lobo da Floresta', 'Animal', 3, 50, 8, 3, 60, 15, 1, 'Floresta Central'),
+(2, 'Guardião da Água', 'Espírito', 8, 120, 18, 10, 150, 50, 2, 'Templo Submerso'),
+(3, 'Golem de Lava', 'Elemental', 12, 200, 25, 20, 300, 80, 3, 'Montanha Vulcânica'),
+(4, 'Mestre dos Ventos', 'Humanoide', 15, 180, 30, 25, 400, 100, 4, 'Penhasco Celeste'),
+(5, 'Dragão Sombrio', 'Dragão', 25, 400, 50, 40, 1000, 500, 5, 'Covil Sombrio');
+
 
 INSERT INTO itens VALUES
 (1, 'Mapa Antigo', 'Mapa', 0, NULL, 'Floresta Proibida'),
@@ -207,6 +188,7 @@ INSERT INTO itens VALUES
 (7, 'Núcleo de Magma', 'Mineral', 10, 'Fogo', 'Golem de Lava'),
 (8, 'Asas de Fênix', 'Acessório', 20, 'Vento', 'Mestre dos Ventos'),
 (9, 'Cristal Elemental', 'Artefato', 50, 'Todos', 'Dragão Sombrio');
+
 
 -- Continentes
 INSERT INTO continentes VALUES
